@@ -66,12 +66,16 @@ app.get('*', (req, res) => {
   // The method for loading data from server-side
   const loadBranchData = (): Promise<any> => {
     const branch = matchRoutes(routes, req.path);
+    console.log(branch);
 
     const promises = branch.map(
-      ({ route, match }) =>
-        route.loadData
+      ({ route, match }) => {
+        // console.log(route.loadData.toString(), match.params);
+        return route.loadData
           ? route.loadData(store.dispatch, match.params)
           : Promise.resolve(null)
+
+      }
     );
 
     return Promise.all(promises);

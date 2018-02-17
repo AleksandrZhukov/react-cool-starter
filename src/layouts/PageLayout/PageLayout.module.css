@@ -1,0 +1,18 @@
+.container {
+  height: 100%;
+}
+
+.page {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.title {
+  margin: 0;
+  height: 65px;
+  box-shadow: inset 0 -1px 0 #b8becc;
+  background-color: #f0f2f5;
+  font-size: 22px;
+  color: #292c33;
+}

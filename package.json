@@ -1,8 +1,7 @@
 {
   "name": "react-cool-starter",
   "version": "2.2.15",
-  "description":
-    "A starter boilerplate for an universal web application with the best development experience and best practices.",
+  "description": "A starter boilerplate for an universal web application with the best development experience and best practices.",
   "main": "index.js",
   "engines": {
     "node": ">=6.0",
@@ -73,15 +72,13 @@
       }
     },
     "build": {
-      "command":
-        "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "build:stats": {
-      "command":
-        "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
       "env": {
         "NODE_ENV": "stats"
       }
@@ -126,17 +123,33 @@
       "stage-0",
       "flow"
     ],
-    "plugins": ["loadable-components/babel", "dynamic-import-node", "lodash"],
+    "plugins": [
+      "loadable-components/babel",
+      "dynamic-import-node",
+      "lodash"
+    ],
     "env": {
       "production": {
-        "plugins": ["transform-remove-console"]
+        "plugins": [
+          "transform-remove-console"
+        ]
       }
     }
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": ["plugin:lodash-fp/recommended", "airbnb", "prettier"],
-    "plugins": ["lodash-fp", "react", "jsx-a11y", "import", "prettier"],
+    "extends": [
+      "plugin:lodash-fp/recommended",
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "lodash-fp",
+      "react",
+      "jsx-a11y",
+      "import",
+      "prettier"
+    ],
     "env": {
       "browser": true,
       "node": true,
@@ -151,7 +164,10 @@
       "react/jsx-filename-extension": [
         1,
         {
-          "extensions": [".js", ".jsx"]
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
         }
       ],
       "import/no-extraneous-dependencies": [
@@ -163,7 +179,9 @@
       "jsx-a11y/anchor-is-valid": [
         "error",
         {
-          "specialLink": ["to"]
+          "specialLink": [
+            "to"
+          ]
         }
       ],
       "lodash-fp/use-fp": 0,
@@ -192,14 +210,25 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global", "local"]
+          "ignorePseudoClasses": [
+            "global",
+            "local"
+          ]
         }
       ]
     }
   },
-  "browserslist": ["> 1%", "last 2 versions", "ie >= 11", "safari >= 7"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "ie >= 11",
+    "safari >= 7"
+  ],
   "jest": {
-    "setupFiles": ["raf/polyfill", "<rootDir>/tools/jest/setup.js"],
+    "setupFiles": [
+      "raf/polyfill",
+      "<rootDir>/tools/jest/setup.js"
+    ],
     "globals": {
       "__DEV__": true
     },
@@ -216,14 +245,14 @@
     ],
     "moduleNameMapper": {
       ".*\\.(css|scss|sass)$": "<rootDir>/tools/jest/styleMock.js",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/tools/jest/assetMock.js"
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/jest/assetMock.js"
     }
   },
   "dependencies": {
     "axios": "0.17.1",
     "babel-register": "^6.26.0",
     "chalk": "2.3.1",
+    "classnames": "^2.2.5",
     "compression": "1.7.1",
     "express": "4.16.2",
     "helmet": "3.11.0",
@@ -238,17 +267,26 @@
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
+    "react-form-base": "^1.5.0",
     "react-helmet": "^5.2.0",
     "react-hot-loader": "4.0.0-beta.22",
+    "react-icon-base": "^2.1.2",
+    "react-icons": "^2.2.7",
+    "react-recaptcha": "^2.3.7",
     "react-redux": "^5.0.6",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "5.0.0-alpha.8",
     "redux": "^3.7.2",
+    "redux-compose-reducer": "^1.1.3",
     "redux-thunk": "^2.2.0",
     "serialize-javascript": "^1.4.0",
     "serve-favicon": "2.4.5",
-    "webpack-isomorphic-tools": "^3.0.5"
+    "socket.io-client": "^2.0.4",
+    "update-js": "^1.6.1",
+    "validate.js": "^0.12.0",
+    "webpack-isomorphic-tools": "^3.0.5",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "autoprefixer": "8.0.0",
@@ -288,11 +326,15 @@
     "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "4.1.0",
     "jest": "22.3.0",
+    "loader-utils": "^1.1.0",
     "nock": "9.1.6",
     "node-sass": "4.7.2",
     "nodemon": "1.15.0",
     "postcss": "6.0.18",
+    "postcss-flexbugs-fixes": "^3.3.0",
+    "postcss-for": "^2.1.1",
     "postcss-loader": "2.1.0",
+    "precss": "^3.1.0",
     "prettier": "1.10.2",
     "prettier-stylelint": "^0.4.2",
     "raf": "3.4.0",

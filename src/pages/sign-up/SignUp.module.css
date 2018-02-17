@@ -1,0 +1,47 @@
+.form {
+  max-width: 375px;
+}
+
+.logo {
+  font-size: 50px;
+}
+
+.title {
+  color: #72808e;
+  &:before, &:after {
+    content: '';
+    width: 100%;
+    display: block;
+    border-top: 1px solid rgba(151, 151, 151, 0.4);
+  }
+  &:before {
+    margin-right: 20px;
+  }
+  &:after {
+    margin-left: 20px;
+  }
+}
+
+.alert {
+  color: #d0021b;
+}
+
+.inputLabel {
+  width: 120px;
+}
+
+.inputLabelMd {
+  width: 150px;
+}
+
+.inputLabelXl {
+  width: 180px;
+}
+
+.links {
+  color: #72808e;
+}
+
+.cancelBtn {
+  color: #72808e;
+}

@@ -1,0 +1,24 @@
+.footerHolder {
+  height: 165px;
+  background-color: #172434;
+  color: #bfbfbf;
+}
+
+.copyRightHolder {
+  height: 30px;
+  background-color: #3d3d59;
+}
+
+.navItem {
+  opacity: 0.5;
+}
+
+.active {
+  opacity: 1;
+}
+
+.socialLink {
+  &, &:hover {
+    color: #bfbfbf;
+  }
+}

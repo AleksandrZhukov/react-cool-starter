@@ -1,0 +1,6 @@
+.content {
+  margin-top: 105px;
+  overflow: auto;
+  height: calc(100vh - 105px);
+  background-color: #f7f7f7;
+}

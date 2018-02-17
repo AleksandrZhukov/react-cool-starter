@@ -1,0 +1,17 @@
+.header {
+  border: 1px solid #f0f0f0;
+  background-color: #fff;
+}
+
+.row {
+  border: 1px solid #f0f0f0;
+  border-top: 0;
+}
+
+.even {
+  background-color: #fbfbfb;
+}
+
+.expandedRow {
+  border-top: 1px solid #f0f0f0;
+}

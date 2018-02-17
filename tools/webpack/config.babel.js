@@ -1,11 +1,12 @@
-import path from 'path';
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import StyleLintPlugin from 'stylelint-webpack-plugin';
-import MinifyPlugin from 'babel-minify-webpack-plugin';
-import CompressionPlugin from 'compression-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+const loaderUtils = require('loader-utils');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv === 'development';
@@ -19,33 +20,21 @@ const CSSModules = true;
 const eslint = false;
 // Enable build process terminated while there's a stylelint error
 const stylelint = false;
-// Register vendors here
-const vendor = [
-  // Allows you to use the full set of ES6 features on client-side (place it before anything else)
-  'babel-polyfill',
-  'react',
-  'react-dom',
-  'redux',
-  'react-redux',
-  'redux-thunk',
-  'react-router-dom',
-  'react-router-config',
-  'history',
-  'react-router-redux',
-  'react-helmet',
-  'loadable-components',
-  'axios'
-];
 
 // Setup the plugins for development/prodcution
 const getPlugins = () => {
   // Common
   const plugins = [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks(module) {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash:8].css',
       allChunks: true,
-      disable: isDev, // Disable css extracting on development
-      ignoreOrder: CSSModules
+      disable: isDev // Disable css extracting on development
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -58,7 +47,10 @@ const getPlugins = () => {
     // Style lint
     new StyleLintPlugin({ failOnError: stylelint }),
     // Setup enviorment variables for client
-    new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: JSON.stringify(nodeEnv),
+      BASE_URL: JSON.stringify('http://api.getcoins.ca/api/')
+    }),
     // Setup global variables for client
     new webpack.DefinePlugin({
       __CLIENT__: true,
@@ -109,20 +101,14 @@ const getPlugins = () => {
 // Setup the entry for development/prodcution
 const getEntry = () => {
   // Development
-  let entry = [
+  const entry = [
     // Allows you to use the full set of ES6 features on client-side (place it before anything else)
     'babel-polyfill',
-    'webpack-hot-middleware/client?reload=true',
     './src/client.js'
   ];
 
-  // Prodcution
-  if (!isDev) {
-    entry = {
-      main: './src/client.js',
-      // Register vendors here
-      vendor
-    };
+  if (isDev) {
+    entry.push('webpack-hot-middleware/client?reload=true');
   }
 
   return entry;
@@ -133,7 +119,7 @@ module.exports = {
   name: 'client',
   target: 'web',
   cache: isDev,
-  devtool: isDev ? 'cheap-module-source-map' : 'hidden-source-map',
+  devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
   context: path.resolve(process.cwd()),
   entry: getEntry(),
   output: {
@@ -146,12 +132,12 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        loader: 'eslint'
-      },
+      // {
+      //   test: /\.jsx?$/,
+      //   enforce: 'pre',
+      //   exclude: /node_modules/,
+      //   loader: 'eslint'
+      // },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -175,6 +161,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                importLoaders: 1,
+                minimize: !isDev
+              }
+            },
+            'postcss'
+          ]
+        })
+      },
+
+      {
+        test: /\.module\.css$/,
+        // exclude: path.resolve(process.cwd(), 'src/css'),
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
           use: [
@@ -185,7 +191,34 @@ module.exports = {
                 sourceMap: true,
                 modules: CSSModules,
                 context: path.resolve(process.cwd(), 'src'),
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                getLocalIdent: (
+                  context,
+                  localIdentName,
+                  localName,
+                  options
+                ) => {
+                  // Use the filename or folder name, based on some uses the index.js / index.module.css project style
+                  const fileNameOrFolder = context.resourcePath.endsWith(
+                    'index.module.css'
+                  )
+                    ? '[folder]'
+                    : '[name]';
+                  // Create a hash based on a the file location and class name. Will be unique across a project, and close to globally unique.
+                  const hash = loaderUtils.getHashDigest(
+                    context.resourcePath + localName,
+                    'md5',
+                    'base64',
+                    5
+                  );
+                  // Use loaderUtils to find the file or folder name
+                  const className = loaderUtils.interpolateName(
+                    context,
+                    `${fileNameOrFolder}_${localName}__${hash}`,
+                    options
+                  );
+                  // remove the .module that appears in every classname when based on the file.
+                  return className.replace('.module_', '_');
+                },
                 minimize: !isDev
               }
             },

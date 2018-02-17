@@ -1,0 +1,11 @@
+.wrapper input {
+  cursor: pointer;
+}
+
+.required:before {
+  content: "*";
+  line-height: 1;
+  font-size: 12px;
+  margin-right: 2px;
+  color: #ff0060;
+}

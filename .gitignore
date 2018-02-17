@@ -6,3 +6,4 @@ node_modules
 public/assets
 public/webpack-assets.json
 public/webpack-stats.json
+/.idea

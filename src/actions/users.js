@@ -41,6 +41,7 @@ export const fetchUsersIfNeeded = (): ThunkAction => (
   dispatch: Dispatch,
   getState: GetState
 ) => {
+  console.log('herer');
   /* istanbul ignore next */
   if (shouldFetchUsers(getState())) {
     /* istanbul ignore next */

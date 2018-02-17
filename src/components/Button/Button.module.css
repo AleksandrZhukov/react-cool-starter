@@ -1,0 +1,55 @@
+.btn {
+  display: inline-block;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0 15px;
+  height: 32px;
+  border-radius: 4px;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  background-color: transparent;
+  color: currentColor;
+}
+
+.btnSm {
+  height: 25px;
+  padding: 0 10px;
+}
+
+.btnXl {
+  height: 38px;
+  padding: 0 18px;
+}
+
+.bordered {
+  border-color: currentColor;
+}
+
+.indigo {
+  background-color: #3d3d59;
+  color: #fff;
+}
+
+.purple {
+  background-color: #462eb4;
+  color: #fff;
+}
+
+.orange {
+  background-color: #d74f16;
+  color: #fff;
+}
+
+.red {
+  background-color: #d0021b;
+  color: #fff;
+}
+
+.blue {
+  background-color: #4a90e2;
+  color: #fff;
+}
